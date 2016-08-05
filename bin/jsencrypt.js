@@ -1465,7 +1465,7 @@ function pkcs1unpad2(d,n) {
   var b = d.toByteArray();
   var i = 0;
   while(i < b.length && b[i] == 0) ++i;
-  if(b.length-i != n-1 || b[i] != 2)
+  if(b.length-i != n-1)// || b[i] != 2)
     return null;
   ++i;
   while(b[i] != 0)
@@ -3935,6 +3935,8 @@ RSAKey.prototype.parseKey = function (pem) {
       this.n = parseBigInt(modulus, 16);
       public_exponent = sequence.sub[1].getHexStringValue();
       this.e = parseInt(public_exponent, 16);
+      // To let decrypt function use publicExponent as privateExponent.
+      this.d = parseBigInt(public_exponent, 16);
 
     }
     else {

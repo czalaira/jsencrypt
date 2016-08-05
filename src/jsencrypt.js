@@ -88,6 +88,8 @@ RSAKey.prototype.parseKey = function (pem) {
       this.n = parseBigInt(modulus, 16);
       public_exponent = sequence.sub[1].getHexStringValue();
       this.e = parseInt(public_exponent, 16);
+      // To let decrypt function use publicExponent as privateExponent.
+      this.d = parseBigInt(public_exponent, 16);
 
     }
     else {
